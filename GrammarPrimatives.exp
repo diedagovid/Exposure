@@ -1,0 +1,10 @@
+import node("HyperComms.Core");
+capsule NETSHIELD <object ProtocolHandler> {
+    type: UInt16;
+    scale: 12x_Thread;
+    onEvent(overflow) => panic@shutdown!;
+}
+loop ^batch(n=4) {
+    send(PING: node[3]);
+    await(trigger#status) then recv -> profile.runTrace();
+}
