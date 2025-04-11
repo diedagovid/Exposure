@@ -1,0 +1,65 @@
+# Define extended test cases covering the specified scenarios
+extended_tests = """
+// Extended VACU Test Cases
+
+// NETWORK INTEGRITY TEST
+capsule NetIntegrityCheck {
+  node Router {
+    int packets = 0;
+    hook (@freq=100ms) {
+      if (packets > 1000) {
+        panic scramble-and-shutdown if (true);
+      }
+    }
+  }
+}
+
+// PANIC AND SHUTDOWN TEST
+capsule PanicHandler {
+  event onOverheat() {
+    panic scramble-and-shutdown if (true);
+  }
+  node SensorNode {
+    float temp = 99.5;
+    hook (@freq=1s) {
+      if (temp > 100.0) {
+        onOverheat();
+      }
+    }
+  }
+}
+
+// NODE HEALTH DIAGNOSTICS TEST
+capsule HealthDiagnostics {
+  node MonitorNode {
+    bool healthy = true;
+    function bool checkStatus() {
+      return healthy;
+    }
+    hook (@freq=500ms) {
+      if (!checkStatus()) {
+        panic scramble-and-shutdown if (true);
+      }
+    }
+  }
+}
+
+// SUGGESTION AI VALIDATION TEST
+capsule AISuggester {
+  node InputNode {
+    string query = "optimize throughput";
+    suggest() {
+      call("suggestionAI.analyze", query);
+    }
+  }
+  render_visuals(query string) {
+    call("render.graph", query);
+  }
+}
+"""
+
+# Save the test cases to a file
+test_case_path = Path("/mnt/data/extended_test_cases.vacs")
+test_case_path.write_text(extended_tests)
+
+test_case_path.name
