@@ -1,0 +1,9 @@
+"contributes": {
+  "themes": [
+    {
+      "label": "VACU Theme",
+      "uiTheme": "vs-dark",
+      "path": "./themes/vacu-theme-color.json"
+    }
+  ]
+}
