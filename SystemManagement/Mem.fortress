@@ -1,0 +1,12 @@
+// 🔐 Capsule: MEM.fortress
+capsule MEM.fortress {
+    quarantine {
+        cache_tunnel: seal;
+        volatile_stack: reroute -> node_backup;
+    }
+
+    onBreach() {
+        rollback(capsule: "COREWATCH.main");
+        flag(node = "DEFENSE.scramble");
+    }
+}
