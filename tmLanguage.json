@@ -1,0 +1,31 @@
+import json
+
+# Define a basic tmLanguage.json structure with syntax highlighting rules for key language constructs
+tm_language = {
+    "name": "VAC Spec",
+    "scopeName": "source.vacs",
+    "fileTypes": ["vacs"],
+    "patterns": [
+        {"name": "keyword.control.vacs", "match": "\\b(?:if|else|loop|return|await|send|call|panic|capsule|node|event|hook|stream|trigger|suggest|render_|setup|compile|trace|profile|bind|bootstrap|inline|multithread|async)\\b"},
+        {"name": "storage.type.vacs", "match": "\\b(?:int|float|bool|char|void|node|capsule|stream|event|chain|hook|trigger)\\b"},
+        {"name": "constant.language.boolean.vacs", "match": "\\b(?:true|false)\\b"},
+        {"name": "constant.numeric.vacs", "match": "\\b\\d+(?:\\.\\d+)?\\b"},
+        {"name": "string.quoted.double.vacs", "begin": '"', "end": '"', "patterns": [{"match": '\\\\.', "name": "constant.character.escape.vacs"}]},
+        {"name": "string.quoted.single.vacs", "begin": "'", "end": "'", "patterns": [{"match": '\\\\.', "name": "constant.character.escape.vacs"}]},
+        {"name": "comment.line.double-slash.vacs", "match": "//.*$"},
+        {"name": "comment.block.vacs", "begin": "/\\*", "end": "\\*/"},
+        {"name": "keyword.operator.vacs", "match": "\\+|\\-|\\*|/|%|==|!=|<=|>=|<|>|&&|\\|\\||=|!|~|&|\\||\\^|<<|>>"},
+        {"name": "punctuation.vacs", "match": "[,;:.(){}\\[\\]]"},
+        {"name": "entity.name.function.vacs", "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\s*(?=\\()"},
+        {"name": "meta.annotation.vacs", "match": "@[a-zA-Z_][a-zA-Z0-9_]*"},
+        {"name": "comment.line.documentation.vacs", "match": "///.*$"},
+        {"name": "storage.modifier.vacs", "match": "\\b(?:sandboxed|register|on|chip|nodegrid\\.sync|node\\.render|capsule\\.chain|GUI\\.monitor|CAPSULE\\.sign)\\b"},
+    ],
+    "uuid": "12345678-9abc-def0-1234-56789abcdef0"
+}
+
+# Save this JSON to a file
+tm_language_path = Path("/mnt/data/vac_spec.tmLanguage.json")
+tm_language_path.write_text(json.dumps(tm_language, indent=2))
+
+tm_language_path.name
