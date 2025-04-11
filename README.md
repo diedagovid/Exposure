@@ -1,5 +1,42 @@
 # Exposure
 
+# Exposure Language
+
+> A precise, expressive programming language for distributed capsules, nodes, events, and reactive chains in dynamic modular environments — forged in the Violet Aura Creations Universe (VACU).
+
+---
+
+## 🌌 Overview
+
+**Exposure** is a domain-specific language (DSL) built to express dynamic capsule behaviors, networked node architectures, and reactive AI-triggered flows. It was originally created as part of the Violet Aura Creations Universe (VACU) to handle distributed logic, visual rendering, and real-time interactivity across a fantasy-futurist computational environment.
+
+---
+
+## ✨ Language Goals
+
+- Reactive and event-driven by design
+- Supports **distributed computation** across nodes and capsules
+- Rich type system for structured, stream, and procedural logic
+- Embedded hooks, triggers, and render blocks
+- Customizable execution paths with decorators and inline annotations
+- Integrates network health and panic protocols
+- AI-based suggestion and rendering validation
+
+---
+
+## 📦 File Format
+
+Exposure files are written using the `.expg` extension.
+
+---
+
+## 🧠 Keywords & Types
+
+### 🔤 Identifiers
+```bnf
+IDENT ::= [a-zA-Z_][a-zA-Z0-9_]*
+
+
 **Exposure: A Control-Oriented Language for Ultra-Streamlined, High-Stakes Systems**
 
 ---
