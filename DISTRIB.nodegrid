@@ -1,0 +1,22 @@
+capsule DISTRIB.nodegrid {
+    nodeset: ["NODE.ALPHA", "NODE.BETA", "NODE.GAMMA"];
+    
+    status() {
+        loop nodeset as node {
+            ping(node);
+            if !respond(node) {
+                log("Node " + node + " not responding");
+                reroute(node);
+            }
+        }
+    }
+
+    sync(payload) {
+        broadcast(payload -> nodeset);
+        confirm(pulse = true);
+    }
+
+    receive(payload) {
+        forward(payload to: "TRACE.kernel");
+    }
+}
