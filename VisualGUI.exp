@@ -1,0 +1,24 @@
+capsule VISUAL.gui.node {
+    render(type: "frame") {
+        window(id: "corewatch_gui", size: "1280x720") {
+            header("Sentinel Corewatcher 7X");
+            
+            statpanel("System Overview") {
+                show(cpu, ram, io);
+                graph(cpu, range=100);
+                graph(ram, range=100);
+            }
+
+            controlpanel("Live Controls") {
+                button("Manual Scramble") -> call("DEFENSE.scramble.shut_lock");
+                toggle("Auto-Pulse", default=true) -> bind("TRACE.kernel.pulse");
+                monitor("Node Activity") -> fetch("DISTRIB.nodegrid.status");
+            }
+
+            footer("Status", live=true) {
+                output("last_alert");
+                output("node_sync_state");
+            }
+        }
+    }
+}
