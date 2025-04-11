@@ -1,0 +1,118 @@
+// Identifiers and Types
+IDENT      ::= [a-zA-Z_][a-zA-Z0-9_]*
+TYPE       ::= "int" | "float" | "bool" | "char" | "void" | "node" | "capsule" | "stream" | "event" | "chain" | "hook" | "trigger"
+
+// Literals
+INT        ::= [0-9]+
+FLOAT      ::= [0-9]+\.[0-9]+
+CHAR       ::= '\'' . '\''
+STRING     ::= "\"" .*? "\""
+
+// Comments
+COMMENT    ::= "//" .*? "\n" | "/*" .*? "*/"
+
+// Operators
+OPERATOR   ::= "+" | "-" | "*" | "/" | "%" | "=" | "==" | "!=" | ">" | "<" | ">=" | "<=" |
+               "&&" | "||" | "!" | "~" | "&" | "|" | "^" | "<<" | ">>"
+
+// Delimiters
+DELIM      ::= "," | ";" | ":" | "." | "->" | "<-" | "::"
+
+// Brackets
+BRACE_OPEN   ::= "{"
+BRACE_CLOSE  ::= "}"
+PAREN_OPEN   ::= "("
+PAREN_CLOSE  ::= ")"
+BRACKET_OPEN ::= "["
+BRACKET_CLOSE::= "]"
+
+program         ::= (capsule | import | send | node_def | event_def | function_def)*
+
+import          ::= "import" IDENT ("::" IDENT)* ";"
+
+send            ::= "send" IDENT ("::" IDENT)* "->" IDENT ("::" IDENT)* ";"
+
+capsule         ::= "capsule" IDENT BRACE_OPEN capsule_body BRACE_CLOSE
+capsule_body    ::= (function_def | hook_def | stream_def | trigger_def | node_def | call_stmt)*
+
+node_def        ::= "node" IDENT BRACE_OPEN node_body BRACE_CLOSE
+node_body       ::= (function_def | property_def | suggest_block | render_block)*
+
+event_def       ::= "event" IDENT PAREN_OPEN param_list? PAREN_CLOSE BRACE_OPEN stmt_block BRACE_CLOSE
+
+function_def    ::= TYPE IDENT PAREN_OPEN param_list? PAREN_CLOSE BRACE_OPEN stmt_block BRACE_CLOSE
+param_list      ::= param ("," param)*
+param           ::= TYPE IDENT
+
+hook_def        ::= "hook" PAREN_OPEN trigger_spec PAREN_CLOSE BRACE_OPEN stmt_block BRACE_CLOSE
+trigger_spec    ::= IDENT ("@" "freq" "=" INT ("s" | "ms"))?
+
+call_stmt       ::= "call" "(" STRING ("," arg_list)? ")" ";"
+arg_list        ::= expr ("," expr)*
+
+stream_def      ::= "stream" IDENT PAREN_OPEN param_list? PAREN_CLOSE BRACE_OPEN stmt_block BRACE_CLOSE
+trigger_def     ::= "trigger" IDENT "->" function_def
+
+property_def    ::= TYPE IDENT "=" expr ";"
+
+stmt_block      ::= stmt*
+stmt            ::= var_def | assignment | if_stmt | loop_stmt | return_stmt | call_stmt | expr ";"
+
+var_def         ::= TYPE IDENT ("=" expr)? ";"
+assignment      ::= IDENT "=" expr ";"
+
+if_stmt         ::= "if" PAREN_OPEN expr PAREN_CLOSE BRACE_OPEN stmt_block BRACE_CLOSE ( "else" BRACE_OPEN stmt_block BRACE_CLOSE )?
+loop_stmt       ::= "loop" expr "as" IDENT BRACE_OPEN stmt_block BRACE_CLOSE
+return_stmt     ::= "return" expr? ";"
+
+expr            ::= expr OPERATOR expr | unary_expr | primary
+unary_expr      ::= ("!" | "-" | "+") expr
+primary         ::= IDENT | literal | function_call | "(" expr ")"
+literal         ::= INT | FLOAT | CHAR | STRING | "true" | "false"
+function_call   ::= IDENT PAREN_OPEN arg_list? PAREN_CLOSE
+
+suggest_block   ::= "suggest()" BRACE_OPEN stmt_block BRACE_CLOSE
+render_block    ::= "render_" IDENT PAREN_OPEN param_list? PAREN_CLOSE BRACE_OPEN stmt_block BRACE_CLOSE
+
+hookToGUI       ::= "GUI.monitor" PAREN_OPEN STRING PAREN_CLOSE "->" call_stmt ";"
+
+chain_log       ::= "CAPSULE.sign" PAREN_OPEN IDENT ("," "immutable=true")? PAREN_CLOSE
+
+await_stmt      ::= "await" IDENT ("until" condition)? ";"
+panic_trigger   ::= "panic" "scramble-and-shutdown" ("if" condition)? ";"
+
+// Special built-ins
+built_in_cmds     ::= "setup" | "compile" | "trace" | "profile" | "bind" | "bootstrap" | "render"
+
+// Memory & concurrency
+memory_scope      ::= "sandboxed" "register" "on" "chip"
+concurrency       ::= "async" function_def | "multithread" function_def
+distribution      ::= "nodegrid.sync" | "node.render" | "capsule.chain"
+
+// Custom decorators and inline controls
+decorator         ::= "@" IDENT
+inline_flag       ::= "inline"
+
+// High to low
+precedence ::= 
+    "()"      // Function calls
+    "!" "~"   // Unary
+    "*" "/" "%"  
+    "+" "-" 
+    "<<" ">>"
+    "<" ">" "<=" ">="
+    "==" "!=" 
+    "&"
+    "^"
+    "|"
+    "&&"
+    "||"
+    "="       // Assignment
+
+// Inline doc-style
+annotation     ::= "///" .*? "\n" | "@doc" STRING
+
+indent_mode    ::= "packed"       // Compact indentation
+spacing_mode   ::= "very accessible" // Visual legibility
+punctuation    ::= "machine-friendly"
+
