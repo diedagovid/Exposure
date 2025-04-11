@@ -1,7 +1,5 @@
 # Exposure
 
-# Exposure Language
-
 > A precise, expressive programming language for distributed capsules, nodes, events, and reactive chains in dynamic modular environments — forged in the Violet Aura Creations Universe (VACU).
 
 ---
