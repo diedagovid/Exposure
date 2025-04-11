@@ -1,0 +1,7 @@
+capsule MainCapsule {
+  node UIController {
+    render_main() {
+      GUI.monitor("theme") -> call "AutoTheme.adjust"(node.health);
+    }
+  }
+}
