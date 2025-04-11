@@ -1,0 +1,24 @@
+capsule NODE.reasoner {
+    suggest() {
+        data = call("NODE.self.analytics");
+        
+        if data.spikes > 5 {
+            return "Enable Trace Containment Mode";
+        } else if data.cpu > 90 {
+            return "Throttle Non-Critical Ops";
+        } else if data.ram_leak {
+            return "Restart LEAKY.proc.service";
+        } else {
+            return "System Stable: Maintain Watch";
+        }
+    }
+
+    render_suggestion() {
+        msg = suggest();
+        GUI.output("node_suggested_action") <- msg;
+    }
+
+    hookToGUI() {
+        GUI.monitor("Reasoner") -> call("NODE.reasoner.render_suggestion");
+    }
+}
