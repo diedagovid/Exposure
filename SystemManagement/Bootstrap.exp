@@ -7,3 +7,15 @@ capsule BOOTSTRAP.config {
         allocate(nodeflow: "trace > mem > defense");
     }
 }
+
+capsule COREWATCH.main {
+    onStart() {
+        call("BOOTSTRAP.config.setup");
+        call("VISUAL.gui.node.render");
+        call("VISUAL.gui.theme.onInit");
+        call("NODE.reasoner.hookToGUI");
+        call("DISTRIB.nodegrid.sync");
+        call("NODE.logger.chain");
+        call("REACTOR.bind");
+    }
+}
