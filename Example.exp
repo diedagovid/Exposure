@@ -1,0 +1,8 @@
+node SYSTEM_MONITOR {
+    trace(cpu|ram|io);
+    onSpike(threshold > 91%) {
+        call(hard_macro[REBOOT.CYCLE]);
+        send(alert[trace.REPORT]);
+        shutdown.sequence(“deep_scramble”);
+    }
+}
