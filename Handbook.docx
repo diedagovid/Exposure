@@ -1,0 +1,166 @@
+Let’s walk through the complete process to bundle your **VACU Theme** as a `.vsix` extension package, publish it to the **Visual Studio Code Marketplace**, and scaffold a proper GitHub repo.
+
+---
+
+## ✅ Step 1: Install Prerequisites
+
+Make sure you have:
+
+- **Node.js** and **npm** installed  
+- **Visual Studio Code**
+- **`vsce`** (VSCode Extension CLI):  
+  ```bash
+  npm install -g vsce
+  ```
+
+---
+
+## 🗂️ Step 2: Project Folder Structure
+
+Here’s the scaffold:
+
+```
+vacu-theme/
+├── themes/
+│   └── vacu-theme-color.json       # Your theme color definitions
+├── syntaxes/
+│   └── exposure.tmLanguage.json    # Exposure syntax grammar
+├── language-configuration.json     # Optional: auto-pairs, comments
+├── extension/
+│   └── exposure.expg               # Sample Exposure demo file
+├── package.json                    # Extension manifest (you already have this)
+├── README.md                       # Full language + theme documentation
+├── CHANGELOG.md                    # Update notes
+├── .vscodeignore                   # Files to exclude in vsix
+└── LICENSE                         # MIT or other license
+```
+
+---
+
+## 🧱 Step 3: Update `package.json`
+
+Ensure it includes:
+
+- **Themes**
+- **Grammars**
+- **Languages**
+
+```json
+"contributes": {
+  "themes": [
+    {
+      "label": "VACU Theme",
+      "uiTheme": "vs-dark",
+      "path": "./themes/vacu-theme-color.json"
+    }
+  ],
+  "grammars": [
+    {
+      "language": "exposure",
+      "scopeName": "source.exposure",
+      "path": "./syntaxes/exposure.tmLanguage.json"
+    }
+  ],
+  "languages": [
+    {
+      "id": "exposure",
+      "aliases": ["Exposure"],
+      "extensions": [".expg"],
+      "configuration": "./language-configuration.json"
+    }
+  ]
+}
+```
+
+---
+
+## 💾 Step 4: Build the `.vsix` Package
+
+From the root of your project folder:
+
+```bash
+vsce package
+```
+
+It will generate a file like:
+
+```
+vacu-theme-1.0.0.vsix
+```
+
+---
+
+## 📤 Step 5: Publish to the Marketplace
+
+### 1. Create a publisher account:
+- Visit: [https://marketplace.visualstudio.com/manage](https://marketplace.visualstudio.com/manage)
+
+### 2. Create a **Personal Access Token** in Azure DevOps:
+- Scope: **All accessible organizations → Marketplace (Publish)**
+
+### 3. Login with `vsce`:
+
+```bash
+vsce login your-publisher-name
+```
+
+Paste your PAT token when prompted.
+
+### 4. Publish:
+
+```bash
+vsce publish
+```
+
+To publish a patch version update:
+```bash
+vsce publish patch
+```
+
+---
+
+## 🌐 Step 6: Auto-Generate GitHub Repository
+
+Here’s a GitHub scaffold command set:
+
+```bash
+git init
+git add .
+git commit -m "Initial VACU Theme + Exposure Language syntax support"
+gh repo create JoeySoprano420/vacu-theme-exposure --public --source=. --push
+```
+
+Make sure you have GitHub CLI installed and authenticated (`gh auth login`).
+
+---
+
+## 🧪 BONUS: Include a Demo `.expg` File
+
+Create this in `extension/exposure.expg`:
+
+```expg
+capsule SystemDiagnostics {
+  node Monitor {
+    int temperature = 70;
+
+    suggest() {
+      if (temperature > 85) {
+        call("Activate coolant system");
+      }
+    }
+
+    render_status() {
+      GUI.monitor("System Status") -> call("Health check: OK");
+    }
+  }
+
+  stream Telemetry(int id) {
+    call("Transmitting telemetry...");
+  }
+
+  CAPSULE.sign(Monitor, immutable=true)
+}
+```
+
+---
+
