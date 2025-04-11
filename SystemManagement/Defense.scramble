@@ -1,0 +1,9 @@
+// ⚠️ Capsule: DEFENSE.scramble
+capsule DEFENSE.scramble {
+    shut_lock() {
+        run_macro("deep_wipe");
+        await(pulse from "TRACE.kernel");
+        call(reboot_sequence = "safe_reset");
+        send("System breach scrambled" -> "NET.alert");
+    }
+}
