@@ -1,0 +1,21 @@
+capsule VISUAL.gui.theme {
+    monitor_health() {
+        loop DISTRIB.nodegrid.nodeset as node {
+            state = call("NODE."+node+".getHealth");
+            if state < 30 {
+                GUI.theme(node, mode="dark", accent="red");
+            } else {
+                GUI.theme(node, mode="light", accent="skyblue");
+            }
+        }
+    }
+
+    render_theme(node) {
+        theme = GUI.theme(node);
+        apply(theme);
+    }
+
+    onInit() {
+        hook(monitor_health @ freq = 2s);
+    }
+}
