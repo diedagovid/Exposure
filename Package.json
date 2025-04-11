@@ -1,0 +1,20 @@
+{
+  "name": "vacu-theme",
+  "displayName": "VACU Theme",
+  "description": "A stylized syntax theme inspired by the Violet Aura Creations Universe (VACU).",
+  "version": "1.0.0",
+  "publisher": "JoeySoprano420",
+  "engines": {
+    "vscode": "^1.50.0"
+  },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "VACU Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/vacu-theme-color.json"
+      }
+    ]
+  }
+}
