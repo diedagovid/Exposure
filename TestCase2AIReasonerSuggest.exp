@@ -1,0 +1,9 @@
+node DecisionMaker {
+  suggest() {
+    if node.load > 80 {
+      call "Actions.reduceLoad"();
+    } else {
+      call "Actions.maintainState"();
+    }
+  }
+}
