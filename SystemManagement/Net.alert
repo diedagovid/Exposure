@@ -1,0 +1,16 @@
+// 🌐 Capsule: NET.alert
+capsule NET.alert {
+    endpoint: ["::core/log/primewatch", "::secure/relay/17"];
+
+    dispatch(data: object) {
+        loop endpoint {
+            send(data) using async_pulse;
+        }
+    }
+
+    receive(snapshot) {
+        parse(snapshot);
+        serialize("citation_protocol");
+        dispatch(snapshot);
+    }
+}
