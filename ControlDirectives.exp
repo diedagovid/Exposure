@@ -1,0 +1,6 @@
+setup();         // Initialize
+compile();       // Compile stream
+trace();         // Begin trace
+profile();       // Start profiler
+render();        // GUI render
+bind();          // Bind trigger/event to capsule
