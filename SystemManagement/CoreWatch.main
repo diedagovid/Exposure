@@ -1,18 +1,22 @@
-// 🚨 Capsule: COREWATCH.main
 capsule COREWATCH.main {
     onStart() {
         call("BOOTSTRAP.config.setup");
         hook(TRACE.kernel.pulse @ freq = 1s);
+        call("VISUAL.gui.node.render");
+        call("DISTRIB.nodegrid.sync");
+        call("REACTOR.bind");
     }
 
     onEvent(system_breach) {
         call("DEFENSE.scramble.shut_lock");
         call("MEM.fortress.onBreach");
+        DISTRIB.nodegrid.sync(payload = system_breach);
     }
 
     run() {
         loop forever {
             TRACE.kernel.pulse();
+            DISTRIB.nodegrid.status();
             wait(1s);
         }
     }
