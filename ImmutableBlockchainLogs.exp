@@ -1,0 +1,24 @@
+capsule NODE.logger.chain {
+    log_event(event) {
+        timestamp = now();
+        hash = hash(event + timestamp + last_log_hash);
+        signed = CAPSULE.sign(hash, immutable=true);
+
+        append("CHAINLOG", {
+            event: event,
+            timestamp: timestamp,
+            hash: hash,
+            signed: signed
+        });
+    }
+
+    show_chain() {
+        GUI.monitor("LogChain") {
+            display(fetch("CHAINLOG"));
+        }
+    }
+
+    onEvent(any) {
+        log_event(any);
+    }
+}
