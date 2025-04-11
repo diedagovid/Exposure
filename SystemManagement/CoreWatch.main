@@ -1,0 +1,19 @@
+// 🚨 Capsule: COREWATCH.main
+capsule COREWATCH.main {
+    onStart() {
+        call("BOOTSTRAP.config.setup");
+        hook(TRACE.kernel.pulse @ freq = 1s);
+    }
+
+    onEvent(system_breach) {
+        call("DEFENSE.scramble.shut_lock");
+        call("MEM.fortress.onBreach");
+    }
+
+    run() {
+        loop forever {
+            TRACE.kernel.pulse();
+            wait(1s);
+        }
+    }
+}
