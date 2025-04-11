@@ -1,0 +1,5 @@
+capsule Logger {
+  stream log_chain(string entry) {
+    CAPSULE.sign(entry, immutable=true);
+  }
+}
