@@ -1,0 +1,13 @@
+// 🧠 Capsule: TRACE.kernel
+capsule TRACE.kernel {
+    profile: {
+        cpu -> monitor(freq = 2s);
+        ram -> log(status = "volatile");
+        io  -> flag(when = threshold > 85%);
+    };
+
+    pulse() {
+        send(snapshot @ "NET.alert");
+        if cpu > 91% then call("DEFENSE.scramble.shut_lock");
+    }
+}
