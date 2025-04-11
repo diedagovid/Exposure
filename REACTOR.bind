@@ -1,0 +1,20 @@
+capsule REACTOR.bind {
+    bind("TRACE.kernel.pulse") {
+        hook @ GUI.toggle("Auto-Pulse");
+        loop while enabled {
+            call("TRACE.kernel.pulse");
+            wait(1s);
+        }
+    }
+
+    bind("DEFENSE.scramble.shut_lock") {
+        if GUI.button("Manual Scramble").pressed {
+            call("DEFENSE.scramble.shut_lock");
+        }
+    }
+
+    bind("VISUAL.gui.node.update") {
+        push(live_data = TRACE.kernel.profile);
+        GUI.output("last_alert") <- TRACE.kernel.last_alert;
+    }
+}
