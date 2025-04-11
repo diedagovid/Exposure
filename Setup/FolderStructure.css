@@ -1,0 +1,6 @@
+vacu-theme/
+├── themes/
+│   └── vacu-theme-color.json   ← [Put your color theme here]
+├── package.json                ← [This one you already created]
+├── README.md                   ← (Optional but recommended)
+└── CHANGELOG.md                ← (Optional)
