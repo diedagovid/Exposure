@@ -178,4 +178,11 @@ If breach exceeds internal config:
 
 
 
+Layer	Capability
+🎛️ GUI Auto-Theming	Visual indicator of node health, styled in real-time
+🕸️ Node Reasoners	Live decisions per node with suggested operator actions
+🔗 Immutable Logging	Chain-signed logs—tamperproof, inspectable, verifiable
+
+
+
 
